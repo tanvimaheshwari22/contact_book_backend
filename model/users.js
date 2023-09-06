@@ -17,13 +17,13 @@ const User = sequelize.define("user_details", {
         type: DataTypes.STRING,
         allowNull: true
     },
-    firstName: {
+    first_name: {
         type: DataTypes.STRING,
     },
-    lastName: {
+    last_name: {
         type: DataTypes.STRING,
     },
-    mobileNumber: {
+    mobile_number: {
         type: DataTypes.STRING,
         unique: true
     },
