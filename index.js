@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import userRoutes from './http/userHttp.js'
 import contactRoutes from './http/contactHttp.js'
+import authenticateUser from './middleware/authentication.js';
 
 const app = express();
 const PORT = 3000;
@@ -11,7 +12,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 app.use("/users", userRoutes)
-app.use("/contacts", contactRoutes)
+app.use("/contacts", authenticateUser,contactRoutes)
 
 app.listen(PORT, (error) => {
     if (!error)
