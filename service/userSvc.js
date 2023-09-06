@@ -6,10 +6,7 @@ export const getUsers = async () => {
 
 export const RegisterUser = async (req) => {
     const reqBody = req.body
-
-    console.log("req body:",reqBody);
-
-    const userByNumber = await userRepo.findUserByMobileNumber(reqBody.mobileNumber)
+    const userByNumber = await userRepo.findUserByMobileNumber(reqBody.mobile_number)
     if (userByNumber === null) {
         return await userRepo.createUser({
             ...reqBody,
@@ -19,7 +16,7 @@ export const RegisterUser = async (req) => {
 
     const user = {
         ...reqBody,
-        mobileNumber: reqBody.mobileNumber,
+        mobile_number: reqBody.mobile_number,
         status: "REGISTERED"
     }
     return await userRepo.updateUser(user)

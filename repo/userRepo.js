@@ -7,7 +7,7 @@ export const getUsers = async () => {
 export const findUserByMobileNumber = async (mobileNumber) => {
     return await User.findOne({
         where: {
-            mobileNumber: mobileNumber
+            mobile_number: mobileNumber
         }
     })
 }
@@ -17,7 +17,7 @@ export const createUser = async (user) => {
 }
 
 export const updateUser = async (user) => {
-    const userByNumber = await findUserByMobileNumber(user.mobileNumber)
+    const userByNumber = await findUserByMobileNumber(user.mobile_number)
     return await User.update(user, {
         where: {
             // @ts-ignore
