@@ -4,6 +4,9 @@ import DataTypes from "sequelize"
 import { sequelize } from "../config/db.js"
 
 const UserContacts = sequelize.define("user_contacts", {
+    name: {
+        type: DataTypes.STRING,
+    },
     fav: {
         type: DataTypes.BOOLEAN
     }
