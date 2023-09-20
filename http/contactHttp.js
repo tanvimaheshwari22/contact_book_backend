@@ -10,12 +10,11 @@ router.get("/", async (req, res) => {
 
 router.get("/all", async (req, res) => {
     const users = await contactSvc.getUserContactById(req.query.user_id);
-    res.status(200).send({ data: users })
+    res.status(200).send({ data: users[0] })
 })
 
 router.post("/", async (req, res) => {
     const user = await contactSvc.addUserToContactList(req)
-
     res.status(200).send({ isVerified: true, data: user })
 })
 

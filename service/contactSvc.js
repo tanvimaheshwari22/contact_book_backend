@@ -9,22 +9,28 @@ export const addUserToContactList = async (req) => {
         addedUser = await userRepo.createUser({
             first_name: reqBody.first_name,
             last_name: reqBody.last_name,
-            mobile_number: reqBody.mobilmobile_numbereNumber,
+            mobile_number: reqBody.mobile_number,
             status: "INVITED"
         })
 
+        const newUser = await userRepo.findUserByMobileNumber(reqBody.mobile_number)
+
         // @ts-ignore
         return await contactRepo.createContact({
-            user_id: addedUser.dataValues.user_id,
-            contact_user_id: reqBody.contact_user_id,
+            name: `${reqBody.first_name} ${reqBody.last_name}`,
+            user_id: reqBody.user_id,
+            // @ts-ignore
+            contact_user_id: newUser.user_id,
             fav: reqBody.fav
         })
     }
 
     return await contactRepo.createContact({
         // @ts-ignore
-        user_id: user.user_id,
-        contact_user_id: reqBody.contact_user_id,
+        user_id: reqBody.user_id,
+        name: `${reqBody.first_name} ${reqBody.last_name}`,
+        // @ts-ignore
+        contact_user_id: user.user_id,
         fav: reqBody.fav
     })
 }
