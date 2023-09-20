@@ -1,7 +1,7 @@
 import * as userRepo from '../repo/userRepo.js'
 
-export const getUsers = async (userId) => {
-    return await userRepo.getUsers(userId);
+export const getUsers = async (req) => {
+    return await userRepo.getUsers(req.user.user.user_id);
 }
 
 export const getAllUsers = async () => {
