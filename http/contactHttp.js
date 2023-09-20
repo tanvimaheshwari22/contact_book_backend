@@ -9,7 +9,10 @@ router.get("/", async (req, res) => {
 })
 
 router.get("/all", async (req, res) => {
-    const users = await contactSvc.getUserContactById(req.query.user_id);
+    const users = await contactSvc.getUserContactById(
+        req.query.user_id,
+        req.query.search_value
+    );
     res.status(200).send({ data: users[0] })
 })
 

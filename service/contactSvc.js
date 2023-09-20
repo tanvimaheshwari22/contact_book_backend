@@ -39,6 +39,9 @@ export const getUserContacts = async () => {
     return await contactRepo.getUserContacts();
 }
 
-export const getUserContactById = async (userId) => {
-    return contactRepo.getUserContactByUserId(userId)
+export const getUserContactById = async (userId, searchValue) => {
+    if (searchValue == undefined || searchValue == "") {
+        return contactRepo.getUserContactByUserId(userId)
+    }
+    return contactRepo.getSearchUsers(userId, searchValue);
 }
