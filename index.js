@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import userRoutes from './http/userHttp.js'
 import contactRoutes from './http/contactHttp.js'
 import loginRoutes from './http/loginHttp.js'
+import messageRoutes from './http/messageHttp.js'
 import authenticateUser from './middleware/authentication.js';
 import cors from 'cors'
 
@@ -19,9 +20,11 @@ app.use(bodyParser.urlencoded({
 }))
 
 
-app.use("/users", authenticateUser, userRoutes)
 app.use("/", loginRoutes)
+app.use("/users", authenticateUser, userRoutes)
 app.use("/contacts", authenticateUser, contactRoutes)
+app.use("/messages", authenticateUser, messageRoutes)
+
 
 app.listen(PORT, (error) => {
     if (!error)
