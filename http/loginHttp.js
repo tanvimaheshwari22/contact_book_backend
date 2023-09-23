@@ -45,6 +45,8 @@ router.post("/login", async (req, res) => {
         name: `${user.first_name} ${user.last_name}`,
         // @ts-ignore
         mobileNumber: user.mobile_number,
+        // @ts-ignore
+        userId: user.user_id,
     };
 
     res.status(200).send({ isVerified: true, accessToken, refreshToken, data: userData })
