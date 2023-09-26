@@ -40,6 +40,9 @@ router.post("/login", async (req, res) => {
         expiresIn: "3d"
     })
 
+    // @ts-ignore
+    await userSvc.login(user.user_id)
+
     const userData = {
         // @ts-ignore
         name: `${user.first_name} ${user.last_name}`,
@@ -50,6 +53,11 @@ router.post("/login", async (req, res) => {
     };
 
     res.status(200).send({ isVerified: true, accessToken, refreshToken, data: userData })
+})
+
+router.put('/logout', async (req, res) => {
+    await userSvc.logout(req)
+    res.status(200).send({ success: true })
 })
 
 export default router

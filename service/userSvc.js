@@ -39,3 +39,16 @@ export const findUserByMobileNumber = async (req) => {
     const reqBody = req.body
     return userRepo.findUserByMobileNumber(reqBody.mobile_number)
 }
+
+export const logout = async (req) => {
+    const reqBody = req.body
+    return userRepo.logout(reqBody.userId)
+}
+
+export const login = async (userId) => {
+    return userRepo.login(userId)
+}
+
+export const getUserByID = async (userID) => {
+    return userRepo.getUserByID(userID)
+}

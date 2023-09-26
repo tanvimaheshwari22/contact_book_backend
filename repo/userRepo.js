@@ -41,3 +41,23 @@ export const findByEmailAndPassword = async (email, password) => {
         }
     })
 }
+
+export const logout = async (userId) => {
+    return User.update({ activity: "OFFLINE" }, {
+        where: {
+            user_id: userId
+        }
+    })
+}
+
+export const login = async (userId) => {
+    return User.update({ activity: "ONLINE" }, {
+        where: {
+            user_id: userId
+        }
+    })
+}
+
+export const getUserByID = async (userId) => {
+    return sequelize.query(`SELECT * FROM user_details WHERE user_id = ${userId}`)
+}

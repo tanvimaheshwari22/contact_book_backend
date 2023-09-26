@@ -13,4 +13,9 @@ router.get("/all", async (req, res) => {
     res.status(200).send({ data: users[0] })
 })
 
+router.get("/:id", async (req, res) => {
+    const user = await userSvc.getUserByID(req.params.id)
+    res.status(200).send({ data: user[0] })
+})
+
 export default router
