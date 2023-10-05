@@ -1,6 +1,5 @@
 import { sequelize } from "../config/db.js";
 import UserContacts from "../model/contacts.js"
-import User from "../model/users.js";
 
 export const createContact = async (userContact) => {
     return await UserContacts.create(userContact)
@@ -23,3 +22,12 @@ export const getSearchUsers = async (userId, searchValue) => {
     ON U.user_id = C.contact_user_id
     WHERE C.user_id = ${userId} AND (C.name LIKE '%${searchValue}%' OR U.mobile_number LIKE '%${searchValue}%')`);
 };
+
+export const findUser = async (user1, user2) => {
+    return await UserContacts.findOne({
+        where: {
+            contact_user_id: user1,
+            user_id: user2
+        }
+    })
+}
