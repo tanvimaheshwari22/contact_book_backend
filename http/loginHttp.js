@@ -32,17 +32,6 @@ router.post("/login", async (req, res) => {
         return res.status(400).send({ msg: "Invalid Credentials" })
     }
 
-    const accessToken = jwt.sign({ user }, jwtAccessToken, {
-        expiresIn: "1d"
-    })
-
-    const refreshToken = jwt.sign({ user }, jwtRefreshToken, {
-        expiresIn: "3d"
-    })
-
-    // @ts-ignore
-    await userSvc.login(user.user_id)
-
     const userData = {
         // @ts-ignore
         name: `${user.first_name} ${user.last_name}`,
@@ -51,6 +40,17 @@ router.post("/login", async (req, res) => {
         // @ts-ignore
         userId: user.user_id,
     };
+
+    const accessToken = jwt.sign({ userData }, jwtAccessToken, {
+        expiresIn: "1d"
+    })
+
+    const refreshToken = jwt.sign({ userData }, jwtRefreshToken, {
+        expiresIn: "3d"
+    })
+
+    // @ts-ignore
+    await userSvc.login(user.user_id)
 
     res.status(200).send({ isVerified: true, accessToken, refreshToken, data: userData })
 })
