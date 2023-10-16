@@ -9,7 +9,7 @@ const UserContacts = sequelize.define("user_contacts", {
     },
     fav: {
         type: DataTypes.BOOLEAN
-    }
+    },
 })
 
 UserContacts.belongsTo(User, {
