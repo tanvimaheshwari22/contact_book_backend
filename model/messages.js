@@ -17,6 +17,10 @@ const Message = sequelize.define("user_messages", {
     },
     contact_status: {
         type: DataTypes.STRING,
+    },
+    seen: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 
