@@ -18,4 +18,9 @@ router.post("/", async (req, res) => {
     res.status(200).send({ isVerified: true, data: user })
 })
 
+router.get("/user", async (req, res) => {
+    const users = await contactSvc.getUserContactByUserId(req)
+    res.status(200).send({ data: users[0] })
+})
+
 export default router
