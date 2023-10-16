@@ -13,4 +13,24 @@ router.post("/send", async (req, res) => {
     res.status(200).send({ success: true, data: message })
 })
 
+router.post("/groupMessages/send", async (req, res) => {
+    const message = await messageSvc.sendGroupMessage(req)
+    res.status(200).send({ success: true, data: message })
+})
+
+router.get("/groupMessages", async (req, res) => {
+    const messages = await messageSvc.getGroupMessages(req)
+    res.status(200).send({ success: true, data: messages[0] })
+})
+
+router.get("/request", async (req, res) => {
+    const message = await messageSvc.getMessagesRequest()
+    res.status(200).send({ success: true, data: message })
+})
+
+router.put("/status", async (req, res) => {
+    await messageSvc.updateMsgStatus(req)
+    res.status(200).send({ success: true })
+})
+
 export default router
