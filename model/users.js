@@ -11,7 +11,6 @@ const User = sequelize.define("user_details", {
     email: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: true,
         validate: {
             isEmail: {
                 msg: "invalid email"
@@ -43,6 +42,10 @@ const User = sequelize.define("user_details", {
         type: DataTypes.STRING,
         defaultValue: "OFFLINE"
     },
+    picture: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    }
 })
 
 User.sync({ alter: true })
