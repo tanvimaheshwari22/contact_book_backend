@@ -18,5 +18,9 @@ router.get("/all", async (req, res) => {
     res.status(200).send({ data: users[0] })
 })
 
+router.put("/", async (req, res) => {
+    await userSvc.updateUser(req)
+    res.status(200).send({ success: true })
+})
 
 export default router

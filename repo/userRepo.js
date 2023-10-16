@@ -26,7 +26,8 @@ export const updateUser = async (user) => {
     return await User.update(user, {
         where: {
             // @ts-ignore
-            user_id: userByNumber.user_id
+            user_id: userByNumber.user_id,
+            mobile_number: user.mobile_number,
         },
         returning: true
     },
@@ -60,4 +61,12 @@ export const login = async (userId) => {
 
 export const getUserByID = async (userId) => {
     return sequelize.query(`SELECT * FROM user_details WHERE user_id = ${userId}`)
+}
+
+export const updateActivity = async (userId, status) => {
+    return User.update({ activity: status }, {
+        where: {
+            user_id: userId
+        }
+    })
 }
