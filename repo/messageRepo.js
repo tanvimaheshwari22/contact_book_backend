@@ -4,13 +4,18 @@ import Message from "../model/messages.js"
 import User from "../model/users.js"
 import * as contactRepo from "../repo/contactRepo.js"
 
-export const sendMessage = async (senderId, recieverId, message) => {
+export const sendMessage = async (senderId, recieverId, message, fileId) => {
     const user = await contactRepo.findUser(senderId, recieverId)
+    let attachment = ""
+    if (fileId) {
+        attachment = `https://drive.google.com/uc?export=view&id=${fileId}`
+    }
     if (!user) {
         return Message.create({
             sender_id: senderId,
             receiver_id: recieverId,
             message: message,
+            attachment: attachment,
             contact_status: "NotAddedBack"
         })
     }
@@ -18,6 +23,7 @@ export const sendMessage = async (senderId, recieverId, message) => {
         sender_id: senderId,
         receiver_id: recieverId,
         message: message,
+        attachment: attachment,
         contact_status: "AddedBack"
     })
 }

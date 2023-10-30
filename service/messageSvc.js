@@ -12,13 +12,14 @@ export const sendMessage = async (req) => {
         CLIENTS[`${reqBody.receiverId}`].send(JSON.stringify({
             receiverId: reqBody.receiverId,
             senderId: req.user.userData.userId,
-            message: reqBody.message
+            message: reqBody.message,
         }));
     }
     return messageRepo.sendMessage(
         req.user.userData.userId,
         reqBody.receiverId,
         reqBody.message,
+        reqBody.fileId
     )
 }
 
