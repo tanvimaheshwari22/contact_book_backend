@@ -10,6 +10,10 @@ const Message = sequelize.define("user_messages", {
     message: {
         type: DataTypes.STRING,
     },
+    attachment: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     created_at: {
         type: 'TIMESTAMP',
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
