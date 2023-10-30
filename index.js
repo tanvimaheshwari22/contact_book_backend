@@ -11,6 +11,12 @@ import http from "http";
 import { WebSocketServer } from 'ws'
 import * as userRepo from './repo/userRepo.js'
 import * as contactRepo from "./repo/contactRepo.js"
+import stream from "stream"
+import { google } from "googleapis";
+import multer from 'multer'
+import path from 'path'
+
+const upload = multer()
 
 const app = express();
 const PORT = 5000;
@@ -96,3 +102,47 @@ wsServer.on('connection', (ws, request) => {
 
     app.set("socket", ws)
 });
+
+const __dirname = path.resolve();
+const KEYFILEPATH = path.join(__dirname, "creds.json");
+const SCOPES = ["https://www.googleapis.com/auth/drive"];
+
+const auth = new google.auth.GoogleAuth({
+    keyFile: KEYFILEPATH,
+    scopes: SCOPES,
+});
+
+app.post("/upload", authenticateUser, upload.single('file'), async (req, res) => {
+    try {
+        const fileId = await uploadFile(req.file);
+        res.status(200).send({ fileId });
+    } catch (f) {
+        res.send(f.message);
+    }
+});
+
+app.post("/upload-image", authenticateUser, upload.single('image'), async (req, res) => {
+    try {
+        const fileId = await uploadFile(req.file);
+        res.status(200).send({ fileId });
+    } catch (f) {
+        res.send(f.message);
+    }
+});
+
+const uploadFile = async (fileObject) => {
+    const bufferStream = new stream.PassThrough();
+    bufferStream.end(fileObject.buffer);
+    const { data } = await google.drive({ version: "v3", auth }).files.create({
+        media: {
+            mimeType: fileObject.mimeType,
+            body: bufferStream,
+        },
+        requestBody: {
+            name: fileObject.originalname,
+            parents: ["1LTPuJxURXlHQXN8Vn9c5Jeabr0eaVfrN"],
+        },
+        fields: "id,name",
+    });
+    return data.id
+};
